@@ -19,27 +19,18 @@ jobs:
       issues: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-          persist-credentials: false
+       - name: Checkout repository
+         uses: actions/checkout@v6
+         with:
+           fetch-depth: 1
+           persist-credentials: false
 
-      - name: Install OpenCode CLI
-        run: curl -fsSL https://opencode.ai/install | bash
-
-      - name: Install Ollama
-        run: |
-          curl -fsSL https://ollama.com/install.sh | sh
-          # Start the Ollama server in the background
-          ollama serve > /dev/null 2>&1 &
-          # Wait for Ollama server to be ready
-          sleep 5
-
-      - name: Pull the desired Ollama model
-        run: ollama pull qwen3:8b
-        # Make sure this matches the model name in opencode.json
-
-      - name: Run OpenCode with configuration
-        # The opencode.json in the repo root will be automatically detected
-        run: opencode github run --event "${{ toJson(github.event) }}"
+       - name: Run OpenCode
+         uses: anomalyco/opencode/github@latest
+         env:
+          # The default GITHUB_TOKEN lacks Copilot Chat permissions.
+          # You must add a PAT with Copilot scopes to your Repo Secrets.
+          GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+         with:
+          # Provider format: github-copilot/<model_name>
+          model: github-copilot/gpt-4
