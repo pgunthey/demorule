@@ -38,13 +38,12 @@ jobs:
           echo "GitHub Token length: ${#GITHUB_TOKEN}"
           if [ -z "$GITHUB_TOKEN" ]; then echo "ERROR: GITHUB_TOKEN is empty"; fi
          env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
 
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
           OLLAMA_BASE_URL: http://localhost:11434
-          USE_GITHUB_TOKEN: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
          with:
           model: ollama/qwen3
