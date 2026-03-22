@@ -39,21 +39,22 @@ jobs:
             sleep 2
           done
 
-       - name: Pull qwen3-coder Model
+       - name: Pull qwen3-coder:30b Model
          run: |
-          echo "Pulling qwen3-coder model..."
-          ollama pull qwen3-coder
+          echo "Pulling qwen3-coder:30b model..."
+          ollama pull qwen3-coder:30b
           echo "Model pulled successfully"
 
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          OLLAMA_BASE_URL: http://localhost:11434
+          OLLAMA_BASE_URL: http://localhost:11434/v1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_GITHUB_TOKEN: true
+          OIDC_BASE_URL: http://localhost:11434/v1
          with:
           use_github_token: true
-          model: ollama/qwen3-coder
+          model: ollama/qwen3-coder:30b
 
        - name: Cleanup - Kill Ollama
          if: always()
