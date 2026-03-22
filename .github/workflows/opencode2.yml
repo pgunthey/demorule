@@ -18,33 +18,27 @@ jobs:
       pull-requests: write
       issues: write
     steps:
+       - name: Check API Keys Length
+         env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         run: |
+          echo "Claude API Key length: ${#ANTHROPIC_API_KEY}"
+          echo "GitHub Token length: ${#GITHUB_TOKEN}"
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ERROR: ANTHROPIC_API_KEY is empty"; fi
+          if [ -z "$GITHUB_TOKEN" ]; then echo "ERROR: GITHUB_TOKEN is empty"; fi
+
        - name: Checkout repository
          uses: actions/checkout@v6
          with:
            fetch-depth: 1
            persist-credentials: true
 
-       - name: Install and Start Ollama
-         run: |
-          curl -fsSL https://ollama.ai/install.sh | sh
-          ollama serve &
-          sleep 5
-
-       - name: Pull Qwen3 Model
-         run: ollama pull qwen3
-
-       - name: Verify Ollama Setup
-         run: |
-          echo "GitHub Token length: ${#GITHUB_TOKEN}"
-          if [ -z "$GITHUB_TOKEN" ]; then echo "ERROR: GITHUB_TOKEN is empty"; fi
-         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          OLLAMA_BASE_URL: http://localhost:11434
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           USE_GITHUB_TOKEN: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          with:
-          model: ollama/qwen3
+          model: anthropic/claude-3-sonnet-20240229
