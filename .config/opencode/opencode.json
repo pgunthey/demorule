@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "permission": "allow",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -8,7 +9,7 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen3-coder": {
+         "qwen3-coder": {
           "name": "qwen3-coder"
         }
       }
