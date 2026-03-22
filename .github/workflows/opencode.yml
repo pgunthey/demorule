@@ -38,3 +38,8 @@ jobs:
             "model": "ollama/qwen3:8b",
             "baseURL": "http://127.0.0.1:11434/v1"
           }' > ~/.config/opencode/config.json
+
+      - name: Run OpenCode CLI
+        run: |
+          npm install -g opencode-ai
+          opencode run "read the current issue, do code chnages, create new branch and create PR"
