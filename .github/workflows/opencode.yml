@@ -31,14 +31,15 @@ jobs:
           ollama serve &
           sleep 5
 
-      - name: Pull model
+      - name: Setup OpenCode Config
         run: |
-          ollama pull llama3
+          mkdir -p ~/.config/opencode
+          echo '{
+            "model": "ollama/qwen3:8b",
+            "baseURL": "http://127.0.0.1:11434/v1"
+          }' > ~/.config/opencode/config.json
 
-      - name: Run OpenCode
-        uses: anomalyco/opencode/github@latest
-        with:
-          model: ollama/llama3
-          base_url: http://localhost:11434
-          # share: true
-          # github_token: xxxx
+      - name: Run OpenCode CLI
+        run: |
+          npm install -g opencode
+          opencode run "Analyze the security of this repository"

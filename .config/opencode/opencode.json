@@ -8,8 +8,8 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "llama3": {
-          "name": "llama3"
+        "qwen3:8b": {
+          "name": "qwen3:8b"
         }
       }
     }
