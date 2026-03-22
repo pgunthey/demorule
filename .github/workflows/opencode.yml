@@ -14,10 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: write
-      pull-requests: write
-      issues: write
-
     steps:
        - name: Checkout repository
          uses: actions/checkout@v6
@@ -28,9 +24,8 @@ jobs:
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          # The default GITHUB_TOKEN lacks Copilot Chat permissions.
-          # You must add a PAT with Copilot scopes to your Repo Secrets.
-          GITHUB_TOKEN: ${{ secrets.COPILOT_PAT }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
          with:
-          # Provider format: github-copilot/<model_name>
-          model: github-copilot/gpt-4
+          model: anthropic/claude-sonnet-4-20250514
+          # share: true
+          # github_token: xxxx
