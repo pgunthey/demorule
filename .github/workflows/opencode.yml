@@ -44,11 +44,12 @@ jobs:
           echo "Pulling qwen3-coder:30b model..."
           ollama pull qwen3-coder:30b
           echo "Model pulled successfully"
+          ollama launch opencode
 
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          OLLAMA_BASE_URL: http://localhost:11434
+          OLLAMA_BASE_URL: http://localhost:11434/v1
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_GITHUB_TOKEN: true
          with:
