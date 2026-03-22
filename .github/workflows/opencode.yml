@@ -44,23 +44,15 @@ jobs:
           echo "Pulling qwen3-coder model..."
           ollama pull qwen3-coder
           echo "Model pulled successfully"
-          ollama list
-
-       - name: Verify Ollama Setup
-         run: |
-          echo "Testing Ollama connection..."
-          curl -s http://localhost:11434/api/tags | head -20
-          echo "GitHub Token length: ${#GITHUB_TOKEN}"
-          if [ -z "$GITHUB_TOKEN" ]; then echo "ERROR: GITHUB_TOKEN is empty"; fi
-         env:
-          GITHUB_TOKEN: ${{ $GITHUB_TOKEN }}
 
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          OLLAMA_BASE_URL: http://localhost:11434
-          GITHUB_TOKEN: ${{ $GITHUB_TOKEN }}
+          OLLAMA_BASE_URL: http://localhost:11434/v1
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USE_GITHUB_TOKEN: true
          with:
+          use_github_token: true
           model: ollama/qwen3-coder
 
        - name: Cleanup - Kill Ollama
