@@ -29,6 +29,6 @@ jobs:
          env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
          with:
-          model: anthropic/claude-sonnet-4-5
+          model: anthropic/claude-sonnet-4
           # share: true
           # github_token: xxxx
