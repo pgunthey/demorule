@@ -58,7 +58,7 @@ jobs:
        - name: Run OpenCode
          uses: anomalyco/opencode/github@latest
          env:
-          OLLAMA_BASE_URL: http://localhost:11434/v1
+          OLLAMA_BASE_URL: http://localhost:11434
           GITHUB_TOKEN: ${{ github.token }}
          with:
           model: ollama/qwen3-coder
