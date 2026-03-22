@@ -38,8 +38,3 @@ jobs:
             "model": "ollama/qwen3:8b",
             "baseURL": "http://127.0.0.1:11434/v1"
           }' > ~/.config/opencode/config.json
-
-      - name: Run OpenCode CLI
-        run: |
-          npm install -g opencode
-          opencode run "Analyze the security of this repository"
