@@ -1,10 +1,23 @@
-export function calculateSubscription(oldPlan, newPlan, daysUsed, totalDays) {
-  let oldCostPerDay = oldPlan / totalDays;
-  let newCostPerDay = newPlan / totalDays;
-  let remainingDays = totalDays - daysUsed;
-  let unusedAmount = oldCostPerDay * remainingDays;
-  let newCharge = newCostPerDay * remainingDays;
-  let finalAmount = newCharge - unusedAmount;
-  return { unusedAmount, newCharge, finalAmount: finalAmount.toFixed(2) };
+export function evaluatePolicy(state, age, workstream, premiumAmount) {
+  const validStates = ["KA", "GJ", "RJ", "MH", "DL", "AP"];
+  
+  let result = {
+    extensionToCoverage: false,
+    durationExtension: 0
+  };
+
+  if (
+    validStates.includes(state) &&
+    age < 60 &&
+    workstream === "WC" &&
+    premiumAmount < 10000
+  ) {
+    result.extensionToCoverage = true;
+    result.durationExtension = 10;
+  }
+
+  return result;
 }
-console.log(calculateSubscription(1000, 1500, 10, 30));
+
+// Example usage
+console.log(evaluatePolicy("MH", 45, "WC", 8000));
